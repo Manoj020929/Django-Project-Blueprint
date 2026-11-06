@@ -1,0 +1,282 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Google Maps Home Page</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+        }
+
+        /* Header */
+        .header {
+            height: 75px;
+            display: flex;
+            align-items: center;
+            padding: 0 25px;
+            gap: 25px;
+            background-color: white;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            width: 220px;
+        }
+
+        .logo img {
+            width: 35px;
+        }
+
+        .logo h2 {
+            font-size: 22px;
+            color: #555;
+            font-weight: normal;
+        }
+
+        .search {
+            flex: 1;
+        }
+
+        .search input {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            background-color: #f1f3f4;
+            border-radius: 30px;
+            font-size: 16px;
+            outline: none;
+        }
+
+        .profile {
+            width: 40px;
+            height: 40px;
+            background-color: #4285f4;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Main Layout */
+        .container {
+            display: flex;
+            height: calc(100vh - 75px);
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 300px;
+            background-color: white;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .sidebar h2 {
+            font-size: 22px;
+            margin-bottom: 20px;
+        }
+
+        .menu a {
+            display: block;
+            padding: 15px;
+            margin-bottom: 8px;
+            text-decoration: none;
+            color: #333;
+            border-radius: 10px;
+        }
+
+        .menu a:hover {
+            background-color: #e8f0fe;
+        }
+
+        .menu .active {
+            background-color: #d3e3fd;
+            color: #174ea6;
+        }
+
+        /* Quick Buttons */
+        .buttons {
+            display: flex;
+            gap: 8px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+
+        .buttons button {
+            padding: 10px 15px;
+            border: 1px solid #ddd;
+            background-color: white;
+            border-radius: 20px;
+            cursor: pointer;
+        }
+
+        .buttons button:hover {
+            background-color: #e8f0fe;
+        }
+
+        /* Location Cards */
+        .location {
+            padding: 15px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .location h3 {
+            font-size: 16px;
+            margin-bottom: 7px;
+        }
+
+        .location p {
+            color: #777;
+            font-size: 13px;
+        }
+
+        /* Map Area */
+        .map {
+            flex: 1;
+            position: relative;
+            background-color: #e5e3df;
+            overflow: hidden;
+        }
+
+        .map iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .map-button {
+            position: absolute;
+            bottom: 25px;
+            right: 25px;
+            background-color: white;
+            padding: 15px;
+            border-radius: 50%;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        /* Responsive */
+        @media (max-width: 700px) {
+            .logo {
+                width: auto;
+            }
+
+            .logo h2 {
+                display: none;
+            }
+
+            .header {
+                padding: 10px;
+                gap: 10px;
+            }
+
+            .sidebar {
+                width: 130px;
+                padding: 10px;
+            }
+
+            .sidebar h2 {
+                font-size: 17px;
+            }
+
+            .menu a {
+                font-size: 13px;
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Header -->
+    <div class="header">
+
+        <div class="logo">
+            <img src="https://www.gstatic.com/images/branding/product/1x/maps_48dp.png">
+            <h2>Google Maps</h2>
+        </div>
+
+        <div class="search">
+            <input type="text" placeholder="Search Google Maps">
+        </div>
+
+        <div class="profile">M</div>
+
+    </div>
+
+    <!-- Main Container -->
+    <div class="container">
+
+        <!-- Sidebar -->
+        <div class="sidebar">
+
+            <h2>Explore</h2>
+
+            <div class="menu">
+                <a href="#" class="active">🗺️ Explore</a>
+                <a href="#">🚗 Directions</a>
+                <a href="#">⭐ Saved Places</a>
+                <a href="#">🕒 Recent</a>
+                <a href="#">📍 Your Places</a>
+                <a href="#">⚙️ Settings</a>
+            </div>
+
+            <div class="buttons">
+                <button>Restaurants</button>
+                <button>Hotels</button>
+                <button>Fuel</button>
+                <button>Cafes</button>
+            </div>
+
+            <h2>Popular Places</h2>
+
+            <div class="location">
+                <h3>📍 Bengaluru</h3>
+                <p>Garden City of India</p>
+            </div>
+
+            <div class="location">
+                <h3>📍 Hyderabad</h3>
+                <p>City of Pearls</p>
+            </div>
+
+            <div class="location">
+                <h3>📍 Chennai</h3>
+                <p>Capital of Tamil Nadu</p>
+            </div>
+
+            <div class="location">
+                <h3>📍 Mumbai</h3>
+                <p>City of Dreams</p>
+            </div>
+
+        </div>
+
+        <!-- Map -->
+        <div class="map">
+
+            <iframe
+                src="https://maps.google.com/maps?q=Bengaluru&t=&z=12&ie=UTF8&iwloc=&output=embed">
+            </iframe>
+
+            <button class="map-button">📍</button>
+
+        </div>
+
+    </div>
+
+</body>
+</html>

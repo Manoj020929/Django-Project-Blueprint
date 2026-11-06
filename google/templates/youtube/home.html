@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VidTube</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Roboto", Arial, sans-serif;
+        }
+        body {
+            background-color: #0F0F0F;
+            color: #FFFFFF;
+        }
+        a { text-decoration: none; }
+
+        /* Header */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 56px;
+            padding: 0 16px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: #0F0F0F;
+            z-index: 100;
+        }
+        .header-left, .header-right {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            cursor: pointer;
+        }
+        .logo-container span {
+            font-weight: bold;
+            font-size: 1.2rem;
+            letter-spacing: -1px;
+        }
+        .header-center {
+            display: flex;
+            align-items: center;
+            flex: 0 1 600px;
+            gap: 12px;
+        }
+        .search-wrap {
+            display: flex;
+            width: 100%;
+        }
+        .search-box {
+            display: flex;
+            width: 100%;
+            background: #121212;
+            border: 1px solid #303030;
+            border-radius: 40px 0 0 40px;
+            padding-left: 16px;
+            align-items: center;
+        }
+        .search-box input {
+            width: 100%;
+            background: transparent;
+            border: none;
+            color: #fff;
+            height: 40px;
+            outline: none;
+            font-size: 1rem;
+        }
+        .search-btn {
+            background-color: #222;
+            border: 1px solid #303030;
+            border-left: none;
+            border-radius: 0 40px 40px 0;
+            width: 64px;
+            height: 40px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .mic-btn {
+            background: #222;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+        .avatar-me {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: #6a1b9a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+        }
+
+        /* Layout */
+        .main-container {
+            display: flex;
+            margin-top: 56px;
+        }
+
+        /* Sidebar */
+        aside {
+            width: 240px;
+            height: calc(100vh - 56px);
+            position: fixed;
+            padding: 12px;
+            overflow-y: auto;
+        }
+        .sidebar-section {
+            border-bottom: 1px solid #3F3F3F;
+            padding-bottom: 12px;
+            margin-bottom: 12px;
+        }
+        .sidebar-item {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            padding: 10px 12px;
+            border-radius: 10px;
+            cursor: pointer;
+            color: #fff;
+            font-size: 0.9rem;
+        }
+        .sidebar-item:hover, .sidebar-item.active {
+            background-color: #272727;
+        }
+
+        /* Content Area */
+        main {
+            margin-left: 240px;
+            padding: 24px;
+            width: calc(100% - 240px);
+        }
+        .tags-bar {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 24px;
+            overflow-x: auto;
+            white-space: nowrap;
+        }
+        .tags-bar::-webkit-scrollbar { display: none; }
+        .tag {
+            background-color: #272727;
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            cursor: pointer;
+        }
+        .tag.active {
+            background-color: #F1F1F1;
+            color: #0F0F0F;
+        }
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 40px 16px;
+        }
+        .video-card {
+            display: flex;
+            flex-direction: column;
+            cursor: pointer;
+        }
+        .thumbnail {
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            background-color: #272727;
+            border-radius: 12px;
+            margin-bottom: 12px;
+        }
+        .t1 { background: linear-gradient(135deg, #11998e, #38ef7d); }
+        .t2 { background: linear-gradient(135deg, #373b44, #4286f4); }
+        .t3 { background: linear-gradient(135deg, #8e2de2, #4a00e0); }
+        .t4 { background: linear-gradient(135deg, #f12711, #f5af19); }
+        .t5 { background: linear-gradient(135deg, #43cea2, #185a9d); }
+        .t6 { background: linear-gradient(135deg, #ff758c, #ff7eb3); }
+
+        .video-details {
+            display: flex;
+            gap: 12px;
+        }
+        .channel-avatar {
+            width: 36px;
+            height: 36px;
+            background-color: #3f51b5;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+        .video-meta h3 {
+            font-size: 0.95rem;
+            font-weight: 500;
+            margin-bottom: 6px;
+            line-height: 1.4rem;
+        }
+        .video-meta p {
+            font-size: 0.85rem;
+            color: #aaa;
+        }
+
+        /* Responsive */
+        @media (max-width: 900px) {
+            aside { display: none; }
+            main { margin-left: 0; width: 100%; padding: 16px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header Section -->
+    <header>
+        <div class="header-left">
+            <svg height="24" width="24" viewBox="0 0 24 24" style="cursor: pointer;">
+                <path fill="#fff" d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
+            </svg>
+            <a href="/youtube/home/" class="logo-container">
+                <svg width="28" height="28" viewBox="0 0 28 28">
+                    <circle cx="14" cy="14" r="13" fill="#FF0000"/>
+                    <path d="M11 8.5L19 14L11 19.5Z" fill="#FFFFFF"/>
+                </svg>
+                <span>VidTube</span>
+            </a>
+        </div>
+
+        <div class="header-center">
+            <div class="search-wrap">
+                <div class="search-box">
+                    <input type="text" placeholder="Search">
+                </div>
+                <button type="button" class="search-btn" aria-label="Search">
+                    <svg viewBox="0 0 24 24" style="display: block; width: 20px; height: 20px;">
+                        <path d="M20.87,20.17l-5.59-5.59C16.35,13.35,17,11.75,17,10c0-3.87-3.13-7-7-7s-7,3.13-7,7s3.13,7,7,7c1.75,0,3.35-0.65,4.58-1.72 l5.59,5.59L20.87,20.17z M10,16c-3.31,0-6-2.69-6-6s2.69-6,6-6s6,2.69,6,6S13.31,16,10,16z" fill="#fff"/>
+                    </svg>
+                </button>
+            </div>
+            <button type="button" class="mic-btn" aria-label="Voice search">
+                <svg viewBox="0 0 24 24" style="display: block; width: 20px; height: 20px;">
+                    <path d="M12,2C10.34,2,9,3.34,9,5v6c0,1.66,1.34,3,3,3s3-1.34,3-3V5C15,3.34,13.66,2,12,2z M17,11c0,2.76-2.24,5-5,5s-5-2.24-5-5H5 c0,3.53,2.61,6.43,6,6.92V21h2v-3.08c3.39-0.49,6-3.39,6-6.92H17z" fill="#fff"/>
+                </svg>
+            </button>
+        </div>
+
+        <div class="header-right">
+            <svg viewBox="0 0 24 24" style="width: 24px; height: 24px; cursor: pointer;">
+                <path d="M14,13h-3v3H9v-3H6v-2h3V8h2v3h3V13z M17,6H3v12h14v-6.39l4,3.83V8.56l-4,3.83V6 M18,4v16L12,14H2V4H18z" fill="#fff"/>
+            </svg>
+            <svg viewBox="0 0 24 24" style="width: 24px; height: 24px; cursor: pointer;">
+                <path d="M12,22c1.1,0,2-0.9,2-2h-4C10,21.1,10.9,22,12,22z M18,16v-5c0-3.07-1.63-5.64-4.5-6.32V4c0-0.83-0.67-1.5-1.5-1.5 s-1.5,0.67-1.5,1.5v0.68C7.64,5.36,6,7.92,6,11v5l-2,2v1h16v-1L18,16z" fill="#fff"/>
+            </svg>
+            <div class="avatar-me">M</div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <div class="main-container">
+
+        <!-- Sidebar -->
+        <aside>
+            <div class="sidebar-section">
+                <a href="#" class="sidebar-item active">Home</a>
+                <a href="#" class="sidebar-item">Shorts</a>
+                <a href="#" class="sidebar-item">Subscriptions</a>
+            </div>
+            <div class="sidebar-section">
+                <a href="#" class="sidebar-item">Library</a>
+                <a href="#" class="sidebar-item">History</a>
+                <a href="#" class="sidebar-item">Your Videos</a>
+                <a href="#" class="sidebar-item">Watch Later</a>
+            </div>
+        </aside>
+
+        <!-- Content Section -->
+        <main>
+            <!-- Tags Filter Bar -->
+            <div class="tags-bar">
+                <div class="tag active">All</div>
+                <div class="tag">Gaming</div>
+                <div class="tag">Music</div>
+                <div class="tag">Live</div>
+                <div class="tag">Podcasts</div>
+                <div class="tag">Programming</div>
+                <div class="tag">Cooking</div>
+                <div class="tag">Gadgets</div>
+                <div class="tag">React Routers</div>
+                <div class="tag">Nature</div>
+            </div>
+
+            <!-- Video Grid -->
+            <div class="video-grid">
+
+                <div class="video-card">
+                    <div class="thumbnail t1"></div>
+                    <div class="video-details">
+                        <div class="channel-avatar"></div>
+                        <div class="video-meta">
+                            <h3>Building a Responsive Frontend Website Layout with HTML and CSS</h3>
+                            <p>FreeCodeCamp.org</p>
+                            <p>125K views &bull; 2 days ago</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="video-card">
+                    <div class="thumbnail t2"></div>
+                    <div class="video-details">
+                        <div class="channel-avatar"></div>
+                        <div class="video-meta">
+                            <h3>Learn JavaScript in 2026 - Comprehensive Beginner to Advanced Guide</h3>
+                            <p>CodeAcademy</p>
+                            <p>45K views &bull; 5 hours ago</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="video-card">
+                    <div class="thumbnail t3"></div>
+                    <div class="video-details">
+                        <div class="channel-avatar"></div>
+                        <div class="video-meta">
+                            <h3>Top 10 Peaceful Lo-Fi Beats to Code/Relax to</h3>
+                            <p>Lofi Girl</p>
+                            <p>3.2M views &bull; Streamed live</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="video-card">
+                    <div class="thumbnail t4"></div>
+                    <div class="video-details">
+                        <div class="channel-avatar"></div>
+                        <div class="video-meta">
+                            <h3>Advanced UI/UX Design Patterns Masterclass</h3>
+                            <p>DesignCourse</p>
+                            <p>89K views &bull; 1 week ago</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="video-card">
+                    <div class="thumbnail t5"></div>
+                    <div class="video-details">
+                        <div class="channel-avatar"></div>
+                        <div class="video-meta">
+                            <h3>Exploring the Deep Mountains of Norway (4K Cinematic Walk)</h3>
+                            <p>Nature Relaxation</p>
+                            <p>510K views &bull; 3 weeks ago</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="video-card">
+                    <div class="thumbnail t6"></div>
+                    <div class="video-details">
+                        <div class="channel-avatar"></div>
+                        <div class="video-meta">
+                            <h3>Understanding System Architecture and Scalable Microservices</h3>
+                            <p>Engineering Digest</p>
+                            <p>210K views &bull; 4 days ago</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+    </div>
+
+</body>
+</html>

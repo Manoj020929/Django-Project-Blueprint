@@ -12,3 +12,6 @@ from django.http import HttpResponse
 
 def index(request):
     return HttpResponse("Eat five star do nothing")
+
+def home(request):
+    return render(request, 'youtube/home.html')
