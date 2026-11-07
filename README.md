@@ -3,11 +3,13 @@ Project Title: Google Applications – Integrated Web Platform
 Technologies Used:
 
 #Backend
+
 Framework: Django6
 Language: Python 3
 
 #Frontend
-Templates: HTML
+
+Templates: HTML5
            CSS
 JavaScript: JS
 
