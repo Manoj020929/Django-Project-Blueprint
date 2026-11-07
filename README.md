@@ -15,7 +15,8 @@ Modules Developed:
 Backend: Python, Django
 Frontend: HTML, CSS, JavaScript
 
-![Youtube](https://github.com/user-attachments/assets/e2356c38-4872-4a9f-9652-5b7bfb162d5c)
+<img width="1360" height="768" alt="image" src="https://github.com/user-attachments/assets/8bc378a4-0993-4e7d-a924-4c9f225409b6" />
+
 
 ![Google_photos](https://github.com/user-attachments/assets/e2356c38-4872-4a9f-9652-5b7bfb162d5c)
 
