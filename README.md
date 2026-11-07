@@ -2,19 +2,13 @@ Project Title: Google Applications – Integrated Web Platform
 
 Technologies Used:
 
-#Backend
+# Back end: Python
+  FrameWork: Django6
 
-Framework: Django6
-Language: Python 3
-
-#Frontend
-
-Templates: HTML5
-           CSS
-JavaScript: JS
-
-
-
+#Front End: HTML5
+          :CSS
+          :JavaScript
+          
 Developed an integrated web application inspired by Google services using Python and Django for backend development and HTML, CSS, and JavaScript for frontend design.
 The project consists of three independent applications: YouTube, Google Photos, and Google Maps.
 YouTube provides a video browsing interface, Google Photos offers a photo gallery and album management interface,
