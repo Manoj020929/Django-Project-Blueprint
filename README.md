@@ -3,6 +3,7 @@ Project Title: Google Applications – Integrated Web Platform
 Technologies Used:
 
 # Back end: Python
+
   FrameWork: Django6
 
 #Front End: HTML5
